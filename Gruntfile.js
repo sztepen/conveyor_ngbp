@@ -285,7 +285,8 @@ module.exports = function ( grunt ) {
      */
     jshint: {
       src: [ 
-        '<%= app_files.js %>'
+        '<%= app_files.js %>',
+        '!src/OrbitControls.js'
       ],
       test: [
         '<%= app_files.jsunit %>'
