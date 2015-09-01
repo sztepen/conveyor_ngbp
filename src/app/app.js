@@ -71,8 +71,11 @@ angular.module('ngBoilerplate', [
             }
 
             // Create a camera, zoom it out from the model a bit, and add it to the scene.
-            camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 20000);
-            camera.position.set(0, 6, 0);
+          camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 20000);
+            camera.position.set(3, 3, 3);
+            camera.rotation.order = 'YXZ';
+            camera.rotation.y = - Math.PI / 4;
+            camera.rotation.x = Math.atan( - 1 / Math.sqrt( 2 ) );
             scene.add(camera);
 
             // Create an event listener that resizes the renderer with the browser window.
@@ -108,13 +111,13 @@ angular.module('ngBoilerplate', [
 
             // Load in the mesh and add it to the scene.
             var loader = new THREE.JSONLoader();
-            loader.load("assets/models/kabinaxx.json", function (geometry) {
+            loader.load("assets/models/belt4000.json", function (geometry) {
 
                 var material = new THREE.MeshLambertMaterial({color: 0x55B663});
                 mesh = new THREE.Mesh(geometry, material);
                 mesh.traverse(function (node) {
                     if (node.material) {
-                        node.material.side = THREE.DoubleSide;
+                  //      node.material.side = THREE.DoubleSide;
                     }
                 });
                 mesh.name = "old mesh";
@@ -123,19 +126,19 @@ angular.module('ngBoilerplate', [
 
             });
 
-            loader.load("assets/models/kabinaxx.json", function (geometry) {
+            loader.load("assets/models/legs.json", function (geometry) {
 
                 var material = new THREE.MeshLambertMaterial({color: 0x55B663});
                 var newmesh = new THREE.Mesh(geometry, material);
                 newmesh.traverse(function (node) {
                     if (node.material) {
-                        node.material.side = THREE.DoubleSide;
+                     //   node.material.side = THREE.DoubleSide;
                     }
                 });
 
                 newmesh.name = "new mesh";
                 scene.add(newmesh);
-                newmesh.position.set(2, 2, 2);
+               // newmesh.position.set(2, 2, 2);
                 objects.push(newmesh);
             });
 
@@ -143,11 +146,11 @@ angular.module('ngBoilerplate', [
             // FLOOR
             var floorTexture = new THREE.ImageUtils.loadTexture('assets/images/grid.png');
             floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-            floorTexture.repeat.set(10, 10);
+            floorTexture.repeat.set(100, 100);
             var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, side: THREE.DoubleSide});
             var floorGeometry = new THREE.PlaneGeometry(100, 100, 10,10);
             var floor = new THREE.Mesh(floorGeometry, floorMaterial);
-            floor.position.y = -0.5;
+            floor.position.y = -0;
             floor.rotation.x = Math.PI / 2;
             floor.name = "floor. this is floor";
             scene.add(floor);
