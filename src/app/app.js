@@ -34,6 +34,9 @@ angular.module('ngBoilerplate', [
 
         function getDimensions()
         {
+
+            var a = 2;
+            var b = 4;
             var style = {};
             if (jumboelement) {
                 style = window.getComputedStyle(jumboelement, null);
@@ -109,6 +112,8 @@ angular.module('ngBoilerplate', [
             var light3 = new THREE.AmbientLight(0x404040); // soft white light
             scene.add(light3);
 
+            var posOfset = 2;
+
             // Load in the mesh and add it to the scene.
             var loader = new THREE.JSONLoader();
             loader.load("assets/models/belt4000.json", function (geometry) {
@@ -122,13 +127,14 @@ angular.module('ngBoilerplate', [
                 });
                 mesh.name = "old mesh";
                 scene.add(mesh);
+                mesh.position.set(0, 0, posOfset);
                 objects.push(mesh);
 
             });
 
             loader.load("assets/models/legs.json", function (geometry) {
 
-                var material = new THREE.MeshLambertMaterial({color: 0x55B663});
+                var material = new THREE.MeshLambertMaterial({color: 0xD2691E});
                 var newmesh = new THREE.Mesh(geometry, material);
                 newmesh.traverse(function (node) {
                     if (node.material) {
@@ -138,8 +144,25 @@ angular.module('ngBoilerplate', [
 
                 newmesh.name = "new mesh";
                 scene.add(newmesh);
-               // newmesh.position.set(2, 2, 2);
+                newmesh.position.set(0, 0, posOfset);
                 objects.push(newmesh);
+            });
+
+
+            loader.load("assets/models/legs.json", function (geometry) {
+
+                var material = new THREE.MeshLambertMaterial({color: 0xD2691E});
+                var newmesh2 = new THREE.Mesh(geometry, material);
+                newmesh2.traverse(function (node) {
+                    if (node.material) {
+                     //   node.material.side = THREE.DoubleSide;
+                    }
+                });
+
+                newmesh2.name = "new mesh2";
+                scene.add(newmesh2);
+                newmesh2.position.set(0, 0, -4 + posOfset);
+                objects.push(newmesh2);
             });
 
 
@@ -167,6 +190,7 @@ angular.module('ngBoilerplate', [
             renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
             renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
             renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
 
         }
 
